@@ -1,0 +1,3 @@
+import type { Metadata } from "next"; import "./globals.css"; import { WalletProvider } from "@/lib/wallet"; import { Navbar } from "@/components/Navbar";
+export const metadata: Metadata = { title: "GSource — Quote context consensus", description: "Check whether a public quote is real and fairly represented with GenLayer." };
+export default function Layout({ children }: { children: React.ReactNode }) { return <html lang="en"><body><WalletProvider><Navbar /><main className="mx-auto max-w-6xl px-4 py-8">{children}</main><footer className="mx-auto max-w-6xl border-t border-court-400/20 px-4 py-6 text-xs text-court-400">GSource · public quote context checks · GenLayer StudioNet</footer></WalletProvider></body></html>; }
