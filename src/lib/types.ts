@@ -1,7 +1,7 @@
 export type QuoteStatus = "open" | "verified" | "slashed" | "undetermined" | "recovered";
 
 export type QuoteCheck = {
-  id: string; title: string; quote: string; source_url: string; claimed_meaning: string;
+  id: string; title: string; quote: string; source_url: string; publisher: string; claimed_meaning: string;
   submitter: string; challenger: string; bond: string; status: QuoteStatus;
   verdict: "" | "accurate" | "misleading" | "not_found" | "undetermined";
   confidence_band: "" | "low" | "medium" | "high"; reasoning: string; created_at: string;

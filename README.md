@@ -8,7 +8,7 @@ Text matching cannot decide whether a quote's surrounding context supports the s
 
 ## Deployed proof
 
-- Contract: `0x343A71530f9dC7c0484B6ceE36c59325Ca50D2F4` on StudioNet
+- Contract: `0xFeA4383b1efD5F260913Ce3349D3c3a41f326FeD` on StudioNet
 - Create: `0x8dacc447a35c054e7fedc99b729d2eee1601ae3be6582620566fd7b8edaf7f7e`
 - Counter context: `0xf15ec7d5ee307bf4cae3203f832bd755f909414c58527f364ece2bae6344f729`
 - Consensus verdict: `0x274fe587c34854ef4e5c71888c538491d0555e6c3141f7fe56bd562843129256`
