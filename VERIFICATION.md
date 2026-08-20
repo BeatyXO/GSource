@@ -5,7 +5,9 @@
 - Final source file: `contracts/gsource.py`.
 - SHA-256 source hash: `8d9cf8b7fb678366f0d1b8b6c847531efa423e00228802e35f0c984166c1586f`.
 - GenLayer dependency: `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`.
-- Final commit is populated after this verification record is committed.
+- Canonical deployed contract source commit: `9bd3a98378def1213f620cfc102124c9ec5a7975`.
+- Current repository head: `63bc304026e476441dfbac8479b223010641e6df`.
+- Commit `63bc304026e476441dfbac8479b223010641e6df` only records live Vercel verification in this file; it does not modify contract or frontend source. The StudioNet deployment therefore corresponds to the contract source from commit `9bd3a98378def1213f620cfc102124c9ec5a7975`.
 
 ## Executed checks
 
