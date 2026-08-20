@@ -1,11 +1,11 @@
-export type QuoteStatus = "open" | "verified" | "slashed" | "undetermined" | "recovered";
+export type QuoteStatus = "open" | "challenge_period" | "ready" | "verified" | "rejected_misleading" | "rejected_not_found" | "undetermined" | "recovered";
 
 export type QuoteCheck = {
   id: string; title: string; quote: string; source_url: string; publisher: string; claimed_meaning: string;
-  submitter: string; challenger: string; bond: string; status: QuoteStatus;
+  submitter: string; challenger: string; bond: string; status: QuoteStatus; challenge_deadline: string;
   verdict: "" | "accurate" | "misleading" | "not_found" | "undetermined";
   confidence_band: "" | "low" | "medium" | "high"; reasoning: string; created_at: string;
-  paid_to_submitter: string; paid_to_challenger: string;
+  paid_to_submitter: string; paid_to_challenger: string; protocol_retained: string;
 };
 
 export type CounterContext = { url: string; content_hash: string; note: string; submitter: string };
