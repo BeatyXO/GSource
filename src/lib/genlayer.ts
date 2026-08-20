@@ -7,7 +7,7 @@ import type { CounterContext, QuoteCheck } from "./types";
 type Input = string | number | bigint;
 type Identity = { mode: "browser"; privateKey: string } | { mode: "injected"; address: string };
 export const contractAddress = process.env.NEXT_PUBLIC_GSOURCE_CONTRACT_ADDRESS as `0x${string}` | undefined;
-export const explorer = process.env.NEXT_PUBLIC_GENLAYER_EXPLORER_URL || "https://genlayer-explorer.vercel.app";
+export const explorer = process.env.NEXT_PUBLIC_GENLAYER_EXPLORER_URL || "https://explorer-studio.genlayer.com";
 const GAP = 2500; const CACHE = 8000; let queue = Promise.resolve(); let last = 0; const cache = new Map<string, { expires: number; value: unknown }>();
 async function queued<T>(job: () => Promise<T>) { const task = queue.then(async () => { const wait = Math.max(0, GAP - Date.now() + last); if (wait) await new Promise(r => setTimeout(r, wait)); last = Date.now(); return job(); }); queue = task.then(() => undefined, () => undefined); return task; }
 const getRead = () => createClient({ chain: studionet, account: createAccount() });

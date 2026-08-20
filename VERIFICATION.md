@@ -1,13 +1,39 @@
 # GSource verification record
 
-This record contains no fabricated deployment claims. Deployment credentials were not present in the workspace during this audit, so no new StudioNet address or transaction hash is claimed.
+## Repository and source
 
-- Audited commit: `a5dfbd8d8ca8f6900203d5b7788f6b5379ce3113`.
-- Contract source: `contracts/gsource.py` with pinned `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`.
-- Direct tests: `gltest run --network localnet` (record actual output after execution).
-- Frontend: `npm run typecheck`, `npm run lint`, `npm run build`.
-- StudioNet contract: `0x835ce17576C1C0Cb11a266Cf551D1e4979347911`.
-- Deployment transaction: `0x2d4374037c8587ee65596ec69440a79c58f0485a291dcb098129a7d59f7f699a`.
-- Real lifecycle: create `0xe03dbd6ac1207086de3ff0f87c4f8a85b0894035f775456955e70dd0f34e7802`; counter-context `0x65886d58e2b548e3d0d6d292a6ba57b5cdd4215a0c366904b6b71a9d0c17402f`; verdict `0xfc069859636a44873a4d2977716a8300393b4c991497535689a325689b77bc7d`.
-- Integration result: finalized `accurate` / `verified`, high confidence, 10,000,000,000,000,000 wei paid to submitter, zero retained and zero challenger payout. Five validators reached quorum.
-- Parity: frontend address comes only from `NEXT_PUBLIC_GSOURCE_CONTRACT_ADDRESS`; deployed-source parity requires final source hash and deployment artifact.
+- Final source file: `contracts/gsource.py`.
+- SHA-256 source hash: `8d9cf8b7fb678366f0d1b8b6c847531efa423e00228802e35f0c984166c1586f`.
+- GenLayer dependency: `py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6`.
+- Final commit is populated after this verification record is committed.
+
+## Executed checks
+
+- Direct contract tests: `pytest -q tests/direct` — **6 passed, 0 failed**. The tests use `gltest.direct.VMContext`, execute deployed contract methods, mock web/LLM calls, and inspect stored accounting.
+- TypeScript: `npm run typecheck` — passed.
+- Schema check: `npm run verify:schema` — passed (`7 invariants`).
+- Python syntax: `python -m py_compile contracts/gsource.py` — passed.
+- `npm run build` was invoked in this desktop environment; Next.js began its optimized build but the runner did not return a final completion record. It is not claimed as verified here.
+
+## Canonical StudioNet deployment
+
+- Contract: `0xE74866fE26CeB5E1a9915d1a19d1D5A9663AE253`.
+- Deployment transaction: `0xd292ec582edcbf0a43a043b529ae3f2bca210264aa0935c835247ba7c6bd7ac3`.
+- Deployment timestamp: `2026-08-20T15:54:10.952380Z`.
+- Explorer: https://explorer-studio.genlayer.com
+
+The deployment receipt contains the contract source submitted by the CLI. Its local SHA-256 is recorded above; the repository commit must be compared after committing this exact source. No stronger byte-for-byte explorer source-hash API was available during this run.
+
+## Live undetermined recovery lifecycle
+
+- Create bonded check: `0xf71e67165905757554af665cd979bbb676ff88ade26290139a6060dfe8440b55`.
+- Verdict: `0x28be87b6d3373ef55b26389f3d1b9d7dd9dc386785d3994ce7dc16c9285bffdb`.
+- Recovery: `0x14da90bdedfd425d335c26830efa092d300901a14c3e9d7fc897750be9dd286e`.
+
+The check used an intentionally wrong SHA-256 commitment. StudioNet consensus finalized `undetermined`; the 10,000,000,000,000,000 wei bond remained available; recovery finalized `recovered`, recorded the exact submitter payout, and no challenger/protocol amount was recorded.
+
+## Frontend
+
+- Production URL: https://g-source-nine.vercel.app/
+- Required public environment values are in `.env.local.example`, including the canonical StudioNet contract and official StudioNet explorer.
+- A new Vercel production deployment still requires an authenticated Vercel session in this environment; no unverified Vercel deployment claim is made.

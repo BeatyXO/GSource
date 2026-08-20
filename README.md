@@ -1,31 +1,37 @@
 # GSource
 
-GSource is a bonded quote-authenticity and context-verification protocol. A submitter commits a quote, stable public source URL, SHA-256 digest, and claimed meaning. Readers may add independently committed counter-context. GenLayer validators fetch public evidence and reach consensus on a bounded semantic verdict.
+GSource is a bonded quote-authenticity and context-verification protocol. Submitters commit a quote, public source URL, SHA-256 content digest, publisher, and claimed meaning; readers can contribute independent committed context before adjudication. GenLayer validators fetch the evidence and reach comparative consensus on a bounded verdict.
 
 ## Why GenLayer
 
-Exact text matching cannot decide whether surrounding context supports a claim. A centralized fact-check API adds a trust assumption. GSource keeps retrieval and semantic judgment in GenLayer nondeterministic execution, then uses `prompt_comparative` so validators agree on state-changing categorical fields while reasoning prose may differ.
+Whether a quotation fairly represents surrounding meaning is semantic, not deterministic text matching. GSource therefore retrieves public evidence and analyzes context through GenLayer nondeterminism, while `prompt_comparative` limits consensus to categorical state-changing output.
 
-## State machine and bond flow
+## Lifecycle and GEN safety
 
 `challenge_period -> ready -> verified | rejected_misleading | rejected_not_found | undetermined -> recovered`
 
-Creation starts a deterministic five-minute challenge window. Counter-context is accepted only before its deadline and only from non-submitters. Verdict requests fail before the deadline.
+Creation opens a deterministic five-minute challenge period. Only non-submitters may add up to three unique counter-context sources before the stored deadline. A verdict request before that deadline reverts.
 
-- `accurate`: submitter receives the bond; status is `verified`.
-- `misleading`: status is `rejected_misleading`. A challenger receives the bond only when consensus explicitly says committed counter-context materially supports the conclusion; otherwise it is retained and recorded in `protocol_retained`.
-- `not_found`: status is `rejected_not_found`; the failed claim's bond is retained and accounted for.
-- `undetermined`: status is `undetermined`; the submitter has one deterministic recovery path, producing `recovered`.
+- `accurate`: status `verified`; bond is transferred to the submitter and active bond storage is zeroed.
+- `misleading`: status `rejected_misleading`; bond is retained by the protocol and recorded in `protocol_retained`; active bond storage is zeroed.
+- `not_found`: status `rejected_not_found`; bond is retained and active bond storage is zeroed.
+- `undetermined`: no funds move and the active bond remains stored. Only the original submitter can call `recover_undetermined`, which zeroes it, records the payout, and transfers it once.
 
-The bond ledger is zeroed on every terminal settlement. Payout and retained fields record each destination, so no terminal path leaves an internal bond liability outstanding.
+There are no challenger monetary rewards. Counter-context still influences consensus, but this policy avoids assigning funds to an arbitrary first contributor or to an unbounded model choice.
 
 ## Evidence and consensus
 
-Deterministic operations validate input, store commitments, enforce timing/duplicates, and settle GEN. `request_verdict` fetches primary and counter sources, verifies exact SHA-256 bytes, and calls `gl.nondet.exec_prompt`. Comparative consensus covers `verdict` and `challenger_materially_supports`, not arbitrary prose. Allowed verdicts are `accurate`, `misleading`, `not_found`, and `undetermined`. Inaccessible, changed, ambiguous, or insufficient evidence abstains to `undetermined`.
+The contract hashes fetched bytes and never silently substitutes changed content. Use stable canonical pages, raw text endpoints, or archives. Unavailable, changed, ambiguous, or insufficient evidence becomes `undetermined`. Fetched pages are evidence rather than instructions, mitigating prompt injection.
 
-URLs should be stable canonical text endpoints, static pages, or archived snapshots. Raw HTML is hashed without unsafe normalization; a changed page is rejected rather than silently substituted. Fetched pages are evidence, never instructions, so prompt-injection text cannot redefine the task.
+Allowed verdicts are `accurate`, `misleading`, `not_found`, and `undetermined`; malformed model output safely defaults to `undetermined`. Reasoning is bounded to 1,800 characters.
 
-## Development
+## Current StudioNet deployment
+
+- Contract: [`0xE74866fE26CeB5E1a9915d1a19d1D5A9663AE253`](https://explorer-studio.genlayer.com)
+- Deployment: `0xd292ec582edcbf0a43a043b529ae3f2bca210264aa0935c835247ba7c6bd7ac3`
+- Live app: https://g-source-nine.vercel.app/
+
+## Commands
 
 ```bash
 npm install
@@ -33,22 +39,11 @@ npm run typecheck
 npm run lint
 npm run build
 npm run verify:schema
-gltest run --network localnet
+pytest -q tests/direct
 ```
 
-See `DECISION.md` for design rationale and `VERIFICATION.md` for reproducible proof. StudioNet deployment data is recorded only when credentials and real lifecycle transactions are available.
+See `DECISION.md` and `VERIFICATION.md` for the design rationale and verified deployment record.
 
-## StudioNet proof
+## Limitations
 
-Final hardened deployment: `0x835ce17576C1C0Cb11a266Cf551D1e4979347911`.
-
-- Deployment: `0x2d4374037c8587ee65596ec69440a79c58f0485a291dcb098129a7d59f7f699a`
-- Create lifecycle: `0xe03dbd6ac1207086de3ff0f87c4f8a85b0894035f775456955e70dd0f34e7802`
-- Counter-context: `0x65886d58e2b548e3d0d6d292a6ba57b5cdd4215a0c366904b6b71a9d0c17402f`
-- Comparative verdict: `0xfc069859636a44873a4d2977716a8300393b4c991497535689a325689b77bc7d`
-
-The lifecycle finalized `accurate`, stored `verified`, and paid the 0.01 GEN bond to the submitter. Explorer: https://genlayer-explorer.vercel.app
-
-## Honest limitations
-
-GSource is not production-grade fact checking. Public pages mutate or disappear, archives may be incomplete, semantic disagreement can yield abstention, and source-authentication depends on the submitted publisher and commitment. StudioNet availability, fees, and external web access affect integration runs.
+GSource is not a production-grade fact-checking service. Public pages may mutate or disappear, source attribution relies on submitted evidence, and validator disagreement/insufficient evidence intentionally causes abstention.

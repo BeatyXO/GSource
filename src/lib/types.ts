@@ -1,4 +1,4 @@
-export type QuoteStatus = "open" | "challenge_period" | "ready" | "verified" | "rejected_misleading" | "rejected_not_found" | "undetermined" | "recovered";
+export type QuoteStatus = "challenge_period" | "ready" | "verified" | "rejected_misleading" | "rejected_not_found" | "undetermined" | "recovered";
 
 export type QuoteCheck = {
   id: string; title: string; quote: string; source_url: string; publisher: string; claimed_meaning: string;
