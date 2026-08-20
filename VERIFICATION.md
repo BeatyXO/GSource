@@ -36,4 +36,4 @@ The check used an intentionally wrong SHA-256 commitment. StudioNet consensus fi
 
 - Production URL: https://g-source-nine.vercel.app/
 - Required public environment values are in `.env.local.example`, including the canonical StudioNet contract and official StudioNet explorer.
-- A new Vercel production deployment still requires an authenticated Vercel session in this environment; no unverified Vercel deployment claim is made.
+- Live verification on 2026-08-20: https://g-source-nine.vercel.app/checks displayed the canonical contract's `Undetermined recovery proof` record (`/checks/0`) as `recovered`, with no browser console errors. This confirms the production frontend is using the canonical contract address.
